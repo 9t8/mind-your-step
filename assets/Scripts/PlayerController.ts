@@ -18,13 +18,13 @@ export class PlayerController extends Component {
   private jumpStep = 0;
 
   // Current jump time
-  private curJumpTime: number;
+  private curJumpTime = 0;
 
   // Total jump time
-  private jumpTime: number;
+  private jumpTime = 0.1;
 
   // current jump speed
-  private curJumpSpeed: number;
+  private curJumpSpeed = 0;
 
   // Current position of the character
   private curPos = new Vec3();
@@ -41,7 +41,9 @@ export class PlayerController extends Component {
 
   onMouseUp(event: EventMouse) {
     if (event.getButton() === 0) {
+      this.jumpByStep(1);
     } else if (event.getButton() === 2) {
+      this.jumpByStep(2);
     }
   }
 
