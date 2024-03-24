@@ -29,8 +29,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": -1.5,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -42,7 +42,7 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 3,
+      "x": 1,
       "y": 1,
       "z": 1
     },
@@ -126,6 +126,7 @@
       "__id__": 0
     },
     "fileId": "1eKbD4b5hG94tT5SV/X9HU",
+    "instance": null,
     "targetOverrides": null
   }
 ]
