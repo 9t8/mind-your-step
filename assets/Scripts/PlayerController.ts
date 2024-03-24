@@ -1,5 +1,6 @@
 import {
   _decorator,
+  Animation,
   Component,
   EventMouse,
   Input,
@@ -35,6 +36,9 @@ export class PlayerController extends Component {
   // The target position of the character
   private targetPos = new Vec3();
 
+  @property({ type: Animation })
+  public BodyAnim: Animation | null = null;
+
   start() {
     input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
   }
@@ -57,6 +61,13 @@ export class PlayerController extends Component {
     this.curJumpSpeed = this.jumpStep / this.jumpTime;
     this.node.getPosition(this.curPos);
     Vec3.add(this.targetPos, this.curPos, new Vec3(this.jumpStep, 0, 0));
+    if (this.BodyAnim) {
+      if (step === 1) {
+        this.BodyAnim.play("oneStep");
+      } else if (step === 2) {
+        this.BodyAnim.play("twoStep");
+      }
+    }
   }
 
   update(deltaTime: number) {
