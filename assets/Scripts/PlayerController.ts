@@ -85,9 +85,7 @@ export class PlayerController extends Component {
       } else {
         // Jumping
         this.node.getPosition(this.curPos);
-        // The difference of the current frame movement position during each jump
-        let deltaPos = new Vec3(this.curJumpSpeed * deltaTime, 0, 0);
-        Vec3.add(this.curPos, this.curPos, deltaPos);
+        this.curPos.x += this.curJumpSpeed * deltaTime;
         this.node.setPosition(this.curPos);
       }
     }
