@@ -34,11 +34,11 @@ export class GameManager extends Component {
 
   private road: BlockType[] = [];
 
-  @property({ type: PlayerController })
-  public playerCtrl: PlayerController | null = null;
-
   @property({ type: Node })
   public startMenu: Node | null = null;
+
+  @property({ type: PlayerController })
+  public playerCtrl: PlayerController | null = null;
 
   @property({ type: Label })
   public stepsLabel: Label | null = null;
@@ -56,8 +56,8 @@ export class GameManager extends Component {
     if (this.playerCtrl) {
       this.playerCtrl.setInputActive(false);
       this.playerCtrl.node.setPosition(Vec3.ZERO);
+      this.playerCtrl.reset();
     }
-    this.playerCtrl.reset(); // FIXME: move up?
   }
 
   set curState(value: GameState) {
@@ -84,10 +84,6 @@ export class GameManager extends Component {
       case GameState.END:
         break;
     }
-  }
-
-  onStartButtonClicked() {
-    this.curState = GameState.PLAYING;
   }
 
   generateRoad() {
@@ -127,7 +123,9 @@ export class GameManager extends Component {
     return block;
   }
 
-  update(deltaTime: number) {}
+  onStartButtonClicked() {
+    this.curState = GameState.PLAYING;
+  }
 
   checkResult(moveIndex: number) {
     if (moveIndex < this.roadLength) {

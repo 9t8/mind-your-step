@@ -5,7 +5,6 @@ import {
   EventMouse,
   Input,
   input,
-  Node,
   SkeletalAnimation,
   Vec3,
 } from "cc";
@@ -13,6 +12,12 @@ const { ccclass, property } = _decorator;
 
 @ccclass("PlayerController")
 export class PlayerController extends Component {
+  @property({ type: Animation })
+  public BodyAnim: Animation | null = null;
+
+  @property({ type: SkeletalAnimation })
+  public CocosAnim: SkeletalAnimation | null = null;
+
   // Whether to receive the jump command
   private startJump = false;
 
@@ -37,17 +42,7 @@ export class PlayerController extends Component {
   // The target position of the character
   private targetPos = new Vec3();
 
-  @property({ type: Animation })
-  public BodyAnim: Animation | null = null;
-
   private curMoveIndex = 0;
-
-  @property({ type: SkeletalAnimation })
-  public CocosAnim: SkeletalAnimation | null = null;
-
-  start() {
-    // input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
-  }
 
   setInputActive(active: boolean) {
     if (active) {
@@ -100,7 +95,7 @@ export class PlayerController extends Component {
         // Jump ends
         this.node.setPosition(this.targetPos);
         this.startJump = false;
-        this.onOnceJumpEnd(); // FIXME: call somewhere else?
+        this.onOnceJumpEnd();
       } else {
         // Jumping
         this.node.getPosition(this.curPos);
