@@ -75,9 +75,7 @@ export class GameManager extends Component {
           this.stepsLabel.string = "0";
         }
         setTimeout(() => {
-          if (this.playerCtrl) {
-            this.playerCtrl.setInputActive(true);
-          }
+          this.playerCtrl?.setInputActive(true);
         }, 0.1);
         break;
 
@@ -101,21 +99,18 @@ export class GameManager extends Component {
 
     let linkedBlocks = 0;
     for (let i = 0; i < this.road.length; ++i) {
-      if (this.road[i]) {
+      if (this.road[i] === BlockType.STONE) {
         ++linkedBlocks;
-      }
-      if (this.road[i] === 0) {
+      } else {
         if (linkedBlocks > 0) {
           this.spawnBlockByCount(i - 1, linkedBlocks);
           linkedBlocks = 0;
         }
       }
-      if (this.road.length === i + 1) {
-        if (linkedBlocks > 0) {
-          this.spawnBlockByCount(i, linkedBlocks);
-          linkedBlocks = 0;
-        }
-      }
+    }
+    if (linkedBlocks > 0) {
+      this.spawnBlockByCount(this.road.length - 1, linkedBlocks);
+      linkedBlocks = 0;
     }
   }
 
@@ -148,21 +143,17 @@ export class GameManager extends Component {
   }
 
   checkResult(moveIndex: number) {
-    if (moveIndex < this.roadLength) {
-      // Jumped on the pit
-      if (this.road[moveIndex] === BlockType.NONE) {
-        this.curState = GameState.INIT;
-      }
-    } else {
-      // Skipped maximum length
+    if (
+      moveIndex >= this.roadLength ||
+      this.road[moveIndex] === BlockType.NONE
+    ) {
       this.curState = GameState.INIT;
     }
   }
 
   onPlayerJumpEnd(moveIndex: number) {
     if (this.stepsLabel) {
-      this.stepsLabel.string =
-        "" + (moveIndex >= this.roadLength ? this.roadLength : moveIndex);
+      this.stepsLabel.string = "" + Math.min(moveIndex, this.roadLength);
     }
     this.checkResult(moveIndex);
   }
