@@ -99,12 +99,32 @@ export class GameManager extends Component {
       }
     }
 
+    let linkedBlocks = 0;
     for (let i = 0; i < this.road.length; ++i) {
-      let block = this.spawnBlockByType(this.road[i]);
-      if (block) {
-        this.node.addChild(block);
-        block.setPosition(i, -1.5, 0);
+      if (this.road[i]) {
+        ++linkedBlocks;
       }
+      if (this.road[i] === 0) {
+        if (linkedBlocks > 0) {
+          this.spawnBlockByCount(i - 1, linkedBlocks);
+          linkedBlocks = 0;
+        }
+      }
+      if (this.road.length === i + 1) {
+        if (linkedBlocks > 0) {
+          this.spawnBlockByCount(i, linkedBlocks);
+          linkedBlocks = 0;
+        }
+      }
+    }
+  }
+
+  spawnBlockByCount(lastPos: number, count: number) {
+    let block: Node | null = this.spawnBlockByType(BlockType.STONE);
+    if (block) {
+      this.node.addChild(block);
+      block?.setScale(count, 1, 1);
+      block?.setPosition(lastPos - (count - 1) * 0.5, -1.5, 0);
     }
   }
 
