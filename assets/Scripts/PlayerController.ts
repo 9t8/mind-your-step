@@ -39,6 +39,8 @@ export class PlayerController extends Component {
   @property({ type: Animation })
   public BodyAnim: Animation | null = null;
 
+  private curMoveIndex = 0;
+
   start() {
     // input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
   }
@@ -76,6 +78,8 @@ export class PlayerController extends Component {
         this.BodyAnim.play("twoStep");
       }
     }
+
+    this.curMoveIndex += step;
   }
 
   update(deltaTime: number) {
@@ -85,6 +89,7 @@ export class PlayerController extends Component {
         // Jump ends
         this.node.setPosition(this.targetPos);
         this.startJump = false;
+        this.onOnceJumpEnd(); // FIXME
       } else {
         // Jumping
         this.node.getPosition(this.curPos);
@@ -93,5 +98,13 @@ export class PlayerController extends Component {
         this.node.setPosition(this.curPos);
       }
     }
+  }
+
+  onOnceJumpEnd() {
+    this.node.emit("JumpEnd", this.curMoveIndex);
+  }
+
+  reset() {
+    this.curMoveIndex = 0;
   }
 }

@@ -34,6 +34,7 @@ export class GameManager extends Component {
 
   start() {
     this.curState = GameState.INIT;
+    this.playerCtrl?.node.on("JumpEnd", this.onPlayerJumpEnd, this);
   }
 
   init() {
@@ -45,6 +46,7 @@ export class GameManager extends Component {
       this.playerCtrl.setInputActive(false);
       this.playerCtrl.node.setPosition(Vec3.ZERO);
     }
+    this.playerCtrl.reset(); // FIXME
   }
 
   set curState(value: GameState) {
@@ -111,4 +113,20 @@ export class GameManager extends Component {
   }
 
   update(deltaTime: number) {}
+
+  checkResult(moveIndex: number) {
+    if (moveIndex < this.roadLength) {
+      // Jumped on the pit
+      if (this.road[moveIndex] === BlockType.NONE) {
+        this.curState = GameState.INIT;
+      }
+    } else {
+      // Skipped maximum length
+      this.curState = GameState.INIT;
+    }
+  }
+
+  onPlayerJumpEnd(moveIndex: number) {
+    this.checkResult(moveIndex);
+  }
 }
