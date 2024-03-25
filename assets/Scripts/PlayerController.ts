@@ -6,6 +6,7 @@ import {
   Input,
   input,
   Node,
+  SkeletalAnimation,
   Vec3,
 } from "cc";
 const { ccclass, property } = _decorator;
@@ -41,6 +42,9 @@ export class PlayerController extends Component {
 
   private curMoveIndex = 0;
 
+  @property({ type: SkeletalAnimation })
+  public CocosAnim: SkeletalAnimation | null = null;
+
   start() {
     // input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
   }
@@ -71,13 +75,20 @@ export class PlayerController extends Component {
     this.curJumpSpeed = this.jumpStep / this.jumpTime;
     this.node.getPosition(this.curPos);
     Vec3.add(this.targetPos, this.curPos, new Vec3(this.jumpStep, 0, 0));
-    if (this.BodyAnim) {
-      if (step === 1) {
-        this.BodyAnim.play("oneStep");
-      } else if (step === 2) {
-        this.BodyAnim.play("twoStep");
-      }
+
+    if (this.CocosAnim) {
+      var state = this.CocosAnim.getState("cocos_anim_jump");
+      state.speed = state.duration / this.jumpTime;
+      this.CocosAnim.play("cocos_anim_jump");
     }
+
+    // if (this.BodyAnim) {
+    //   if (step === 1) {
+    //     this.BodyAnim.play("oneStep");
+    //   } else if (step === 2) {
+    //     this.BodyAnim.play("twoStep");
+    //   }
+    // }
 
     this.curMoveIndex += step;
   }
@@ -101,6 +112,9 @@ export class PlayerController extends Component {
   }
 
   onOnceJumpEnd() {
+    if (this.CocosAnim) {
+      this.CocosAnim.play("cocos_anim_idle");
+    }
     this.node.emit("JumpEnd", this.curMoveIndex);
   }
 
