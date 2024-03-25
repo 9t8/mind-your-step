@@ -1,6 +1,5 @@
 import {
   _decorator,
-  Animation,
   Component,
   EventMouse,
   Input,
