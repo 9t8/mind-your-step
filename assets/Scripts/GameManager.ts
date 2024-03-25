@@ -26,22 +26,22 @@ enum GameState {
 export class GameManager extends Component {
   // The runway prefab
   @property({ type: Prefab })
-  public cubePrfb: Prefab | null = null;
+  cubePrfb: Prefab | null = null;
 
   // Total road length
   @property
-  public roadLength = 50;
+  roadLength = 50;
 
   private road: BlockType[] = [];
 
   @property({ type: Node })
-  public startMenu: Node | null = null;
+  startMenu: Node | null = null;
 
   @property({ type: PlayerController })
-  public playerCtrl: PlayerController | null = null;
+  playerCtrl: PlayerController | null = null;
 
   @property({ type: Label })
-  public stepsLabel: Label | null = null;
+  stepsLabel: Label | null = null;
 
   start() {
     this.curState = GameState.INIT;

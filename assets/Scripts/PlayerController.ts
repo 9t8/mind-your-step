@@ -12,7 +12,7 @@ const { ccclass, property } = _decorator;
 @ccclass("PlayerController")
 export class PlayerController extends Component {
   @property({ type: SkeletalAnimation })
-  public CocosAnim: SkeletalAnimation | null = null;
+  CocosAnim: SkeletalAnimation | null = null;
 
   // Whether to receive the jump command
   private startJump = false;
