@@ -123,8 +123,8 @@ export class GameManager extends Component {
     let block: Node | null = this.spawnBlockByType(BlockType.STONE);
     if (block) {
       this.node.addChild(block);
-      block?.setScale(count, 1, 1);
-      block?.setPosition(lastPos - (count - 1) * 0.5, -1.5, 0);
+      block.setScale(count, 1, 1);
+      block.setPosition(lastPos - (count - 1) * 0.5, -1.5, 0);
     }
   }
 
