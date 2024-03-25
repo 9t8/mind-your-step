@@ -48,23 +48,20 @@ export class GameManager extends Component {
     this.playerCtrl?.node.on("JumpEnd", this.onPlayerJumpEnd, this);
   }
 
-  private init() {
-    if (this.startMenu) {
-      this.startMenu.active = true;
-    }
-    this.generateRoad();
-
-    if (this.playerCtrl) {
-      this.playerCtrl.setInputActive(false);
-      this.playerCtrl.node.setPosition(Vec3.ZERO);
-      this.playerCtrl.reset();
-    }
-  }
-
   private set curState(value: GameState) {
     switch (value) {
       case GameState.INIT:
-        this.init();
+        if (this.startMenu) {
+          this.startMenu.active = true;
+        }
+
+        this.generateRoad();
+
+        if (this.playerCtrl) {
+          this.playerCtrl.setInputActive(false);
+          this.playerCtrl.node.setPosition(Vec3.ZERO);
+          this.playerCtrl.reset();
+        }
         break;
 
       case GameState.PLAYING:
