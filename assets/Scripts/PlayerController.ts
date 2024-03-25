@@ -12,13 +12,9 @@ const { ccclass, property } = _decorator;
 @ccclass("PlayerController")
 export class PlayerController extends Component {
   @property({ type: SkeletalAnimation })
-  CocosAnim: SkeletalAnimation | null = null;
+  private CocosAnim: SkeletalAnimation | null = null;
 
-  // Whether to receive the jump command
-  private startJump = false;
-
-  // The jump step count
-  private jumpStep = 0;
+  private jumping = false;
 
   // Current jump time
   private curJumpTime = 0;
@@ -45,7 +41,7 @@ export class PlayerController extends Component {
     }
   }
 
-  onMouseUp(event: EventMouse) {
+  private onMouseUp(event: EventMouse) {
     if (event.getButton() === 0) {
       this.jumpByStep(1);
     } else if (event.getButton() === 2) {
@@ -53,15 +49,15 @@ export class PlayerController extends Component {
     }
   }
 
-  jumpByStep(step: number) {
-    if (this.startJump) {
+  private jumpByStep(step: number) {
+    if (this.jumping) {
       return;
     }
-    this.startJump = true;
-    this.jumpStep = step;
+
+    this.jumping = true;
     this.curJumpTime = 0;
-    this.curJumpSpeed = this.jumpStep / this.jumpTime;
-    Vec3.add(this.targetPos, this.node.position, new Vec3(this.jumpStep, 0, 0));
+    this.curJumpSpeed = step / this.jumpTime;
+    Vec3.add(this.targetPos, this.node.position, new Vec3(step, 0, 0));
 
     if (this.CocosAnim) {
       let state = this.CocosAnim.getState("cocos_anim_jump");
@@ -73,7 +69,7 @@ export class PlayerController extends Component {
   }
 
   update(deltaTime: number) {
-    if (!this.startJump) {
+    if (!this.jumping) {
       return;
     }
 
@@ -81,7 +77,7 @@ export class PlayerController extends Component {
     if (this.curJumpTime > this.jumpTime) {
       // Jump ends
       this.node.setPosition(this.targetPos);
-      this.startJump = false;
+      this.jumping = false;
 
       this.CocosAnim?.play("cocos_anim_idle");
       this.node.emit("JumpEnd", this.curMoveIndex);

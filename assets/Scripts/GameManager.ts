@@ -26,29 +26,29 @@ enum GameState {
 export class GameManager extends Component {
   // The runway prefab
   @property({ type: Prefab })
-  cubePrfb: Prefab | null = null;
+  private cubePrfb: Prefab | null = null;
 
   // Total road length
   @property
-  roadLength = 50;
+  private roadLength = 50;
 
   private road: BlockType[] = [];
 
   @property({ type: Node })
-  startMenu: Node | null = null;
+  private startMenu: Node | null = null;
 
   @property({ type: PlayerController })
-  playerCtrl: PlayerController | null = null;
+  private playerCtrl: PlayerController | null = null;
 
   @property({ type: Label })
-  stepsLabel: Label | null = null;
+  private stepsLabel: Label | null = null;
 
   start() {
     this.curState = GameState.INIT;
     this.playerCtrl?.node.on("JumpEnd", this.onPlayerJumpEnd, this);
   }
 
-  init() {
+  private init() {
     if (this.startMenu) {
       this.startMenu.active = true;
     }
@@ -61,7 +61,7 @@ export class GameManager extends Component {
     }
   }
 
-  set curState(value: GameState) {
+  private set curState(value: GameState) {
     switch (value) {
       case GameState.INIT:
         this.init();
@@ -85,7 +85,7 @@ export class GameManager extends Component {
     }
   }
 
-  generateRoad() {
+  private generateRoad() {
     this.node.removeAllChildren();
     this.road = [];
     this.road.push(BlockType.STONE);
@@ -115,7 +115,7 @@ export class GameManager extends Component {
     }
   }
 
-  spawnBlockByCount(lastPos: number, count: number) {
+  private spawnBlockByCount(lastPos: number, count: number) {
     let block: Node | null = this.spawnBlockByType(BlockType.STONE);
     if (block) {
       this.node.addChild(block);
@@ -124,7 +124,7 @@ export class GameManager extends Component {
     }
   }
 
-  spawnBlockByType(type: BlockType) {
+  private spawnBlockByType(type: BlockType) {
     if (!this.cubePrfb) {
       return null;
     }
@@ -143,7 +143,7 @@ export class GameManager extends Component {
     this.curState = GameState.PLAYING;
   }
 
-  onPlayerJumpEnd(moveIndex: number) {
+  private onPlayerJumpEnd(moveIndex: number) {
     if (this.stepsLabel) {
       this.stepsLabel.string = "" + Math.min(moveIndex, this.roadLength);
     }
