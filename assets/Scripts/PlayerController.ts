@@ -89,7 +89,7 @@ export class PlayerController extends Component {
         // Jump ends
         this.node.setPosition(this.targetPos);
         this.startJump = false;
-        this.onOnceJumpEnd(); // FIXME
+        this.onOnceJumpEnd(); // FIXME: call somewhere else?
       } else {
         // Jumping
         this.node.getPosition(this.curPos);

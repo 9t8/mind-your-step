@@ -1,4 +1,12 @@
-import { _decorator, Component, instantiate, Node, Prefab, Vec3 } from "cc";
+import {
+  _decorator,
+  Component,
+  instantiate,
+  Label,
+  Node,
+  Prefab,
+  Vec3,
+} from "cc";
 import { PlayerController } from "./PlayerController";
 const { ccclass, property } = _decorator;
 
@@ -32,6 +40,9 @@ export class GameManager extends Component {
   @property({ type: Node })
   public startMenu: Node | null = null;
 
+  @property({ type: Label })
+  public stepsLabel: Label | null = null;
+
   start() {
     this.curState = GameState.INIT;
     this.playerCtrl?.node.on("JumpEnd", this.onPlayerJumpEnd, this);
@@ -46,7 +57,7 @@ export class GameManager extends Component {
       this.playerCtrl.setInputActive(false);
       this.playerCtrl.node.setPosition(Vec3.ZERO);
     }
-    this.playerCtrl.reset(); // FIXME
+    this.playerCtrl.reset(); // FIXME: move up?
   }
 
   set curState(value: GameState) {
@@ -58,6 +69,10 @@ export class GameManager extends Component {
       case GameState.PLAYING:
         if (this.startMenu) {
           this.startMenu.active = false;
+        }
+
+        if (this.stepsLabel) {
+          this.stepsLabel.string = "0";
         }
         setTimeout(() => {
           if (this.playerCtrl) {
@@ -127,6 +142,10 @@ export class GameManager extends Component {
   }
 
   onPlayerJumpEnd(moveIndex: number) {
+    if (this.stepsLabel) {
+      this.stepsLabel.string =
+        "" + (moveIndex >= this.roadLength ? this.roadLength : moveIndex);
+    }
     this.checkResult(moveIndex);
   }
 }
