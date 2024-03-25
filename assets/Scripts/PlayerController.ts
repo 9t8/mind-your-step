@@ -61,8 +61,7 @@ export class PlayerController extends Component {
     this.jumpStep = step;
     this.curJumpTime = 0;
     this.curJumpSpeed = this.jumpStep / this.jumpTime;
-    this.node.getPosition(this.curPos);
-    Vec3.add(this.targetPos, this.curPos, new Vec3(this.jumpStep, 0, 0));
+    Vec3.add(this.targetPos, this.node.position, new Vec3(this.jumpStep, 0, 0));
 
     if (this.CocosAnim) {
       let state = this.CocosAnim.getState("cocos_anim_jump");
@@ -77,23 +76,21 @@ export class PlayerController extends Component {
     if (!this.startJump) {
       return;
     }
+
     this.curJumpTime += deltaTime;
     if (this.curJumpTime > this.jumpTime) {
       // Jump ends
       this.node.setPosition(this.targetPos);
       this.startJump = false;
-      this.onOnceJumpEnd();
+
+      this.CocosAnim?.play("cocos_anim_idle");
+      this.node.emit("JumpEnd", this.curMoveIndex);
     } else {
       // Jumping
       this.node.getPosition(this.curPos);
       this.curPos.x += this.curJumpSpeed * deltaTime;
       this.node.setPosition(this.curPos);
     }
-  }
-
-  onOnceJumpEnd() {
-    this.CocosAnim?.play("cocos_anim_idle");
-    this.node.emit("JumpEnd", this.curMoveIndex);
   }
 
   reset() {

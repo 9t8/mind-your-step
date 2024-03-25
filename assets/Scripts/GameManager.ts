@@ -53,6 +53,7 @@ export class GameManager extends Component {
       this.startMenu.active = true;
     }
     this.generateRoad();
+
     if (this.playerCtrl) {
       this.playerCtrl.setInputActive(false);
       this.playerCtrl.node.setPosition(Vec3.ZERO);
@@ -142,19 +143,16 @@ export class GameManager extends Component {
     this.curState = GameState.PLAYING;
   }
 
-  checkResult(moveIndex: number) {
+  onPlayerJumpEnd(moveIndex: number) {
+    if (this.stepsLabel) {
+      this.stepsLabel.string = "" + Math.min(moveIndex, this.roadLength);
+    }
+
     if (
       moveIndex >= this.roadLength ||
       this.road[moveIndex] === BlockType.NONE
     ) {
       this.curState = GameState.INIT;
     }
-  }
-
-  onPlayerJumpEnd(moveIndex: number) {
-    if (this.stepsLabel) {
-      this.stepsLabel.string = "" + Math.min(moveIndex, this.roadLength);
-    }
-    this.checkResult(moveIndex);
   }
 }
