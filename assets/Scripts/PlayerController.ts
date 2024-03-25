@@ -12,9 +12,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass("PlayerController")
 export class PlayerController extends Component {
-  @property({ type: Animation })
-  public BodyAnim: Animation | null = null;
-
   @property({ type: SkeletalAnimation })
   public CocosAnim: SkeletalAnimation | null = null;
 
@@ -76,14 +73,6 @@ export class PlayerController extends Component {
       state.speed = state.duration / this.jumpTime;
       this.CocosAnim.play("cocos_anim_jump");
     }
-
-    // if (this.BodyAnim) {
-    //   if (step === 1) {
-    //     this.BodyAnim.play("oneStep");
-    //   } else if (step === 2) {
-    //     this.BodyAnim.play("twoStep");
-    //   }
-    // }
 
     this.curMoveIndex += step;
   }
