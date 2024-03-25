@@ -31,9 +31,6 @@
     ],
     "_active": true,
     "_components": [],
-    "_prefab": {
-      "__id__": 43
-    },
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -63,7 +60,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 44
+      "__id__": 43
     },
     "_id": "2219bac0-0f17-4463-af40-d96b45a0321f"
   },
@@ -91,10 +88,10 @@
     },
     "_lrot": {
       "__type__": "cc.Quat",
-      "x": -0.06397656665577071,
-      "y": -0.44608233363525845,
-      "z": -0.8239028751062036,
-      "w": -0.3436591377065261
+      "x": -0.08619841216052426,
+      "y": 0.14724695169538116,
+      "z": 0.012882439012095185,
+      "w": 0.9852523594097718
     },
     "_lscale": {
       "__type__": "cc.Vec3",
@@ -106,9 +103,9 @@
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
-      "x": -117.894,
-      "y": -194.909,
-      "z": 38.562
+      "x": -10,
+      "y": 17,
+      "z": 0
     },
     "_id": "c0y6F5f+pAvI805TdmxIjx"
   },
@@ -1654,38 +1651,30 @@
     "_id": "14uP2vFJVOQ5d8Uelc3bpL"
   },
   {
-    "__type__": "cc.PrefabInfo",
-    "root": null,
-    "asset": null,
-    "fileId": "2219bac0-0f17-4463-af40-d96b45a0321f",
-    "instance": null,
-    "targetOverrides": null
-  },
-  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 45
+      "__id__": 44
     },
     "shadows": {
-      "__id__": 46
+      "__id__": 45
     },
     "_skybox": {
-      "__id__": 47
+      "__id__": 46
     },
     "fog": {
-      "__id__": 48
+      "__id__": 47
     },
     "octree": {
-      "__id__": 49
+      "__id__": 48
     },
     "skin": {
-      "__id__": 50
+      "__id__": 49
     },
     "lightProbeInfo": {
-      "__id__": 51
+      "__id__": 50
     },
     "postSettings": {
-      "__id__": 52
+      "__id__": 51
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
@@ -1741,14 +1730,14 @@
   {
     "__type__": "cc.ShadowsInfo",
     "_enabled": true,
-    "_type": 1,
+    "_type": 0,
     "_normal": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 1,
-      "z": 0
+      "y": 0,
+      "z": 1
     },
-    "_distance": 0,
+    "_distance": -1,
     "_planeBias": 1,
     "_shadowColor": {
       "__type__": "cc.Color",
